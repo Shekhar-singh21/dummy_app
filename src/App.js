@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import LoginPage from './components/LoginPage';
+import LandingPage from './components/LandingPage';
 import './App.css';
+import Navbar from './components/Navbar';
+import BrokerForm from './components/BrokerForm';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route
+          path="/*"
+          element={
+            <React.Fragment>
+              <Navbar />
+              <Routes>
+                <Route path="/landing-page" element={<LandingPage />} />
+                <Route path="/broker" element={<BrokerForm />} />
+                {/* Add more routes as needed */}
+                <Route path="*" element={<Navigate to="/landing-page" />} />
+              </Routes>
+            </React.Fragment>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
